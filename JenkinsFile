@@ -47,7 +47,8 @@ pipeline {
                         xcopy /E /H /C /I /Y "E:\\Angular v19\\sakai-ng\\dist\\*" "C:\\inetpub\\wwwroot\\SAKAI\\"
 
                         echo Restarting IIS...
-                       bat 'powershell -Command "Start-Process PowerShell -ArgumentList \\"iisreset /restart\\" -Verb RunAs"'
+                       powershell -Command "Start-Process PowerShell -ArgumentList \\"iisreset /restart\\" -Verb RunAs"
+                         
                     '''
                 }
             }
