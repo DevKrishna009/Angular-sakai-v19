@@ -5,8 +5,7 @@ pipeline {
     }
     environment {
         NODE_VERSION = '20.19.0'  // Set Node.js version (adjust as needed)
-        BUILD_DIR = "C:/data/jenkins_home/workspace/Angular-sakai-v19/dist/sakai-ng"  // Adjust this to match your Angular build output folder
-        DEPLOY_DIR = "C:\\inetpub\\wwwroot\\Angular"  // IIS physical path
+        
     }
    
 
@@ -42,7 +41,7 @@ pipeline {
             steps {
                 script {
                     def deployCmd = """
-                        xcopy /E /I /Y "C:\data\jenkins_home\workspace\Angular-sakai-v19\dist\sakai-ng\*" "C:\inetpub\wwwroot\Angular\"
+                        xcopy /E /I /Y "C:/data/jenkins_home/workspace/Angular-sakai-v19/dist/sakai-ng/*" "C:/inetpub/wwwroot/Angular/"
 
                     """
                     bat deployCmd  // Use 'sh' instead of 'bat' if using Linux
