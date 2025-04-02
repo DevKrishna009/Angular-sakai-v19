@@ -25,11 +25,7 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                bat 'npm install'  // Use 'sh' for Linux, replace with 'bat' for Windows
-            }
-        }
+       
 
        stage('Build Angular Project') {
             steps {
