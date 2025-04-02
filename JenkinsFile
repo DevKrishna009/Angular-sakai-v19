@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        NODE_VERSION = '20'  // Set Node.js version (adjust as needed)
+        NODE_VERSION = '20.19.0'  // Set Node.js version (adjust as needed)
         BUILD_DIR = "E:/Angular v19/sakai-ng/dist/sakai-ng"  // Adjust this to match your Angular build output folder
         DEPLOY_DIR = "C:\\inetpub\\wwwroot\\Angular"  // IIS physical path
     }
