@@ -1,0 +1,58 @@
+pipeline {
+    agent any
+
+    environment {
+        NODE_VERSION = '20'  // Set Node.js version (adjust as needed)
+        BUILD_DIR = "E:/Angular v19/sakai-ng/dist/sakai-ng"  // Adjust this to match your Angular build output folder
+        DEPLOY_DIR = "C:\\inetpub\\wwwroot\\Angular"  // IIS physical path
+    }
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/DevKrishna009/Angular-sakai-v19.git'
+            }
+        }
+
+        stage('Setup Node.js') {
+            steps {
+                script {
+                    def nodeHome = tool name: "NodeJS-${NODE_VERSION}", type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+                    env.PATH = "${nodeHome}/bin:${env.PATH}"
+                }
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                bat 'npm install'  // Use 'sh' for Linux, replace with 'bat' for Windows
+            }
+        }
+
+       stage('Build Angular Project') {
+            steps {
+                bat 'npm run build'
+            }
+        }
+
+        stage('Deploy to IIS') {
+            steps {
+                script {
+                    def deployCmd = """
+                        xcopy /E /I /Y ${BUILD_DIR}\\* ${DEPLOY_DIR}\\
+                    """
+                    bat deployCmd  // Use 'sh' instead of 'bat' if using Linux
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Deployment successful!"
+        }
+        failure {
+            echo "Deployment failed!"
+        }
+    }
+}
