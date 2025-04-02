@@ -38,15 +38,21 @@ pipeline {
         stage('Deploy to IIS') {
             steps {
                 script {
-                    def deployCmd = """
-                        xcopy /E /I /Y "E:/Angular v19/sakai-ng/dist/sakai-ng/browser/*" "C:/inetpub/wwwroot/SAKAI"
+                    bat '''
+                        echo Deleting old files...
+                        rmdir /S /Q "C:\\inetpub\\wwwroot\\SAKAI"
+                        mkdir "C:\\inetpub\\wwwroot\\SAKAI"
 
-                    """
-                    bat deployCmd  // Use 'sh' instead of 'bat' if using Linux
+                        echo Copying new build files...
+                        xcopy /E /H /C /I /Y "E:\\Angular v19\\sakai-ng\\dist\\*" "C:\\inetpub\\wwwroot\\SAKAI\\"
+
+                        echo Restarting IIS...
+                        iisreset
+                    '''
                 }
             }
         }
-    }
+    
 
     post {
         success {
