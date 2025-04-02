@@ -36,23 +36,19 @@ pipeline {
         }
 
         stage('Deploy to IIS') {
-            steps {
-                script {
-                    bat '''
-                        echo Deleting old files...
-                        rmdir /S /Q "C:\\inetpub\\wwwroot\\SAKAI"
-                        mkdir "C:\\inetpub\\wwwroot\\SAKAI"
+    steps {
+        script {
+            bat '''
+                echo Copying new build files...
+                xcopy /E /H /C /I /Y "C:\\data\\jenkins_home\\workspace\\Angular-sakai-v19\\dist\\sakai-ng\\browser\\*" "C:\\inetpub\\wwwroot\\SAKAI\\"
 
-                        echo Copying new build files...
-                        xcopy /E /H /C /I /Y "C:\\data\\jenkins_home\\workspace\\Angular-sakai-v19\\dist\\sakai-ng\\browser*" "C:\\inetpub\\wwwroot\\SAKAI\\"
-
-                        echo Restarting IIS...
-                       powershell -Command "Start-Process PowerShell -ArgumentList \\"iisreset /restart\\" -Verb RunAs"
-                         
-                    '''
-                }
-            }
+                echo Restarting IIS...
+                powershell -Command "Start-Process PowerShell -ArgumentList \\"iisreset /restart\\" -Verb RunAs"
+            '''
         }
+    }
+
+
 }
     
 
