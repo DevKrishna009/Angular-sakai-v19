@@ -39,7 +39,7 @@ pipeline {
             steps {
                 script {
                     def deployCmd = """
-                        xcopy /E /I /Y "C:/data/jenkins_home/workspace/Angular-sakai-v19/dist/sakai-ng/*" "C:/inetpub/wwwroot/Angular/"
+                        xcopy /E /I /Y "C:/data/jenkins_home/workspace/Angular-sakai-v19/dist/sakai-ng/browser/*" "C:/inetpub/wwwroot/Angular/"
 
                     """
                     bat deployCmd  // Use 'sh' instead of 'bat' if using Linux
