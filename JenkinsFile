@@ -7,7 +7,7 @@ pipeline {
         NODE_VERSION = '20.19.0'  // Set Node.js version (adjust as needed) 
     }
     triggers {
-        pollSCM('H/1 * * * *')  // Jenkins will check the repository every 1 minute
+        pollSCM('* * * * *')  // Jenkins will check the repository every 1 minute
     }    
    
 
