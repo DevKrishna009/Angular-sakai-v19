@@ -25,7 +25,21 @@ pipeline {
             }
         }
 
-       
+        stage('Backup Old Files') {
+                steps {
+                    script {
+                        def date = new Date().format('yyyy-MM-dd')
+                        def backupDir = "C:\\angular-backup\\backup-${date}"
+                        bat """
+                            echo Creating backup directory...
+                            mkdir "${backupDir}"
+    
+                            echo Copying existing files to backup...
+                            xcopy /E /H /C /I /Y "C:\\inetpub\\wwwroot\\SAKAI\\*" "${backupDir}\\"
+                        """
+                    }
+                }
+            }
 
        stage('Build Angular Project') {
             steps {
