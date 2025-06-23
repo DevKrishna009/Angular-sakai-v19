@@ -41,6 +41,18 @@ pipeline {
                 }
             }
 
+         stage('Install Dependencies') {
+            steps {
+                bat 'npm install'
+            }
+        }
+
+         stage('Build Angular Project') {
+				steps {
+					bat 'npm run build'
+				}
+    		}
+
         stage('Deploy to IIS') {
 			steps {
 				script {
@@ -54,13 +66,7 @@ pipeline {
 				}
 			}
 		}
-
-	  stage('Build Angular Project') {
-				steps {
-					bat 'npm run build'
-				}
-    		}
-    	}
+}	 
     
 
     post {
